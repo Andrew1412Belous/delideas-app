@@ -17,7 +17,7 @@ import useAuthorizationService from '../../services/AuthorizationService'
 
 const Page404 = lazy(() => import('../pages/404'))
 const MainPage = lazy(() => import('../pages/MainPage'))
-const SinglePage = lazy(() => import('../pages/SinglePage'))
+const SingleRecipePage = lazy(() => import('../pages/SingleRecipePage'))
 const FridgePage = lazy(() => import('../pages/FridgePage'))
 
 const Profile = lazy(() => import('../profile/Profile'))
@@ -53,8 +53,10 @@ const App = () => {
                <Route path="/" element={<MainPage/>}/>
                <Route path="/fridge" element={<FridgePage/>}/>
                <Route path="/recipes/:id"
-                      element={<SinglePage
-                        Component={SingleCharItem}
+                      element={<SingleRecipePage
+                        isAuth={isAuth}
+                        currentUser={currentUser}
+                        userLoggedIn={userLoggedIn}
                       />}/>
                <Route path='/registration' element={isAuth ? null : <Registration userLoggedIn={userLoggedIn}/>}/>
                <Route path='/login' element={isAuth ? null : <Login userLoggedIn={userLoggedIn}/>}/>

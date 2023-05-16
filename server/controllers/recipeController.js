@@ -8,14 +8,9 @@ class RecipeController {
 
       const recipes = await Recipe.find()
 
-      console.log(offset)
-      console.log(limit)
-
       const sliceCount = recipes.length >= (limit)
         ? limit
         : recipes.length
-
-      console.log(sliceCount)
 
       return res.json(recipes.slice(offset, sliceCount))
     } catch (e) {

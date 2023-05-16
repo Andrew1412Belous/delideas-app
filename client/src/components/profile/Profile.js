@@ -6,6 +6,8 @@ const Profile = ({ userLoggedIn }) => {
   const logout = () => {
     localStorage.removeItem('token')
 
+    navigate(-1)
+
     userLoggedIn({})
   }
 

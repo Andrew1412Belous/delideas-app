@@ -35,7 +35,7 @@ const useAuthorizationService = () => {
     }
   }
 
-  const auth = async (email, password) => {
+  const auth = async () => {
     try {
       const response = await axios.get(`${_apiBase}/auth`, {
         headers: {
@@ -52,10 +52,37 @@ const useAuthorizationService = () => {
     }
   }
 
+  const updateFavorites = async (userId, recipeId) => {
+    try {
+      const response = await axios.patch(`${_apiBase}/update`, {
+        id: userId,
+        recipeId
+      })
+
+      alert(`Бажане оновлено`)
+
+      return response.data
+    } catch (e) {
+      alert(e.response.data.message)
+    }
+  }
+
+  const getFavorites = async (userId) => {
+    try {
+      const response = await axios.get(`${_apiBase}/update?id=${userId}`)
+
+      return response.data
+    } catch (e) {
+
+    }
+  }
+
   return {
     registration,
     login,
-    auth
+    auth,
+    getFavorites,
+    updateFavorites,
   }
 }
 

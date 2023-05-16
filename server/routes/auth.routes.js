@@ -1,5 +1,6 @@
 const Router = require('express')
 const User = require('../models/User')
+const Recipe = require('../models/Recipe')
 const bcrypt = require('bcryptjs')
 const config = require('config')
 const { v4 } = require('uuid')
@@ -7,6 +8,7 @@ const jwt = require('jsonwebtoken')
 const authMiddleware = require('../middleware/auth.middleware')
 
 const { check, validationResult } = require('express-validator')
+const {ObjectId} = require('mongodb')
 
 const router = new Router()
 
@@ -108,6 +110,52 @@ router.get('/auth', authMiddleware,
         favorites: user.favorites
       }
     })
+  } catch (e) {
+    console.log(e.message)
+    res.send({
+      message: 'Server Error'
+    })
+  }
+})
+
+router.patch('/update', async (req, res) => {
+  try {
+    const { id } = req.body
+    const recipeId = parseInt(req.body.recipeId)
+
+    const user = await User.findOne({ id })
+
+    if (user.favorites.includes(recipeId)) {
+      user.favorites = user.favorites.filter(item => item !== recipeId)
+    } else {
+      const recipe = await Recipe.findOne({ id: recipeId })
+
+      if (recipe) {
+        user.favorites.push(recipeId)
+      } else {
+        res.status(401).send({ message: 'Invalid recipe id' })
+      }
+    }
+
+    await user.save()
+
+    return res.json(user)
+  } catch (e) {
+    console.log(e.message)
+    res.send({
+      message: 'Server Error'
+    })
+  }
+})
+
+router.get('/favorites', async (req, res) => {
+  try {
+    const { id } = req.query
+
+    const user = await User.findOne({ id })
+    const recipes = await Recipe.find({ id: {$in: user.favorites} })
+
+    return res.json(recipes)
   } catch (e) {
     console.log(e.message)
     res.send({

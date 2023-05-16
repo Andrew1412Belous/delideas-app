@@ -12,9 +12,8 @@ const SingleRecipeItem = ({ data }) => {
   const backLink = location.state
     ? '/fridge'
     : '/'
-  const isFromFridgePage = data.hasOwnProperty('ingredientsCount')
 
-  console.log(isFromFridgePage)
+  const isFromFridgePage = data.hasOwnProperty('ingredientsCount')
 
   const requiredForPurchase = (index) => isFromFridgePage
       ? data.ingredientsCount
@@ -80,6 +79,7 @@ const SingleRecipeItem = ({ data }) => {
           })}>
           <div className="inner">Повернутися назад</div>
         </div>
+
       </div>
     </div>
   )
