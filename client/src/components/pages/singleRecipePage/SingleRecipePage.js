@@ -4,21 +4,21 @@ import {
   useState,
 } from 'react'
 
-import AppBanner from '../appBanner/AppBanner'
-import setContent from '../../utils/setContent'
-import useRecipeService from '../../services/RecipeService'
+import AppBanner from '../../appBanner/AppBanner'
+import setContent from '../../../utils/setContent'
+import useRecipeService from '../../../services/RecipeService'
 import { Helmet } from 'react-helmet'
 
-import './singleCharItem/singleRecipeItem.scss'
-import useAuthorizationService from '../../services/AuthorizationService'
+import './singleRecipePage.scss'
+import useAuthorizationService from '../../../services/AuthorizationService'
 
 const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
+  const [data, setData] = useState(null)
+
   const location = useLocation()
   const navigate = useNavigate()
 
   const { id } = useParams()
-
-  const [data, setData] = useState(null)
 
   const { getRecipe, getRecipeByIngredients, clearError, process, setProcess } = useRecipeService()
   const { updateFavorites } = useAuthorizationService()
@@ -26,7 +26,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
   useEffect(() => updateData(), [id])
 
   const setFavorite = () => {
-    updateFavorites(currentUser.id, id)
+    updateFavorites(id)
       .then(userLoggedIn)
   }
 
@@ -49,7 +49,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
   }
 
   const renderPage = (data) => {
-    const { title, ingredients, times, instructions, image } = data
+    const { title, ingredients, times, instructions, image, category } = data
 
     const backLink = location.state
       ? '/fridge'
@@ -68,7 +68,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
       ? ingredients.map((item, i) => {
         return (
           <li key={i} className="char__comics-item">
-            {item} {requiredForPurchase(i)}
+            {item[0].toUpperCase() + item.slice(1)} {requiredForPurchase(i)}
           </li>
         )
       })
@@ -84,14 +84,6 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
       })
       : null
 
-    const recipeTime = (times) => {
-      if (times.length) {
-        return <div className="char__comics">Максимальний час приготування: {times[times.length - 1]}</div>
-      } else {
-        return null
-      }
-    }
-
     return (
       <div className="single-comic">
         <Helmet>
@@ -104,6 +96,9 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
         <img src={image} alt={title} className="single-comic__char-img"/>
         <div className="single-comic__info">
           <h2 className="single-comic__name">{title}</h2>
+          <div className="char__comics">Категорія:
+            <span className="single-comic__descr"> {category}</span>
+          </div>
           <div className="char__comics">Інгрідієнти:</div>
           <ul className="char__comics-list">
             {ingredientsList}
@@ -112,7 +107,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
           <ol className="char__comics-list">
             {steps}
           </ol>
-          {recipeTime(times)}
+          <div className="char__comics">{`Максимальний час приготування: ${times}`}</div>
         </div>
         <div className="char__btns">
           <div className="button button__main single-comic-link"

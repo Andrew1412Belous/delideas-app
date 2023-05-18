@@ -29,7 +29,7 @@ const FridgeRecipesList = ({ comicsList, offset, setOffset, fridgeIngredients, p
               state: fridgeIngredients
             })}
             tabIndex={0}
-            key={recipes[i].id}>
+            key={i}>
             <img src={recipes[i].image} alt={recipes[i].title} className="comics__item-img" style={{objectFit: 'cover'}}/>
             <div className="comics__item-name">{recipes[i].title}</div>
             <div className="comics__item-name">Потрібно докупити</div>

@@ -65,25 +65,25 @@ const useRecipeService = () => {
     return {
       ...item,
       ingredientsCount: [...new Set(ingredientsCount)],
-      instructions: item.instructions.map(step => step.text)
     }
   }
 
-  const getAllFilters = async () => request(`${_apiBase}/filters`)
+  const getAllCategories = async () => request(`${_apiBase}/categories`)
 
   const _transformRecipe = (recipe) => ({
-      id: recipe.id,
+      id: recipe["_id"],
       title: recipe.title,
       ingredients: recipe.ingredients,
       times: recipe.times,
-      instructions: recipe.instructions.map(step => typeof step === 'string' ? step :step.text),
+      instructions: recipe.instructions,
       image: recipe.image,
+      category: recipe.category
     })
 
   return {
     getRecipe,
     getAllRecipes,
-    getAllFilters,
+    getAllCategories,
     getAllRecipesByIngredients,
     getRecipeByIngredients,
     getRandomRecipe,

@@ -12,6 +12,7 @@ const FridgePage = () => {
   const location = useLocation()
 
   const [fridgeIngredients, setFridgeIngredients] = useState('')
+
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [isRecipesFound, setIsRecipesFound] = useState(null)
   const [comicsList, setComicsList] = useState([])
@@ -31,7 +32,7 @@ const FridgePage = () => {
     }
   }, [fridgeIngredients])
 
-  const onFilterSelected = (id) => {
+  const onCategorySelected = (id) => {
     setSelectedFilter(id)
   }
 
@@ -42,6 +43,8 @@ const FridgePage = () => {
   }
 
   const onComicsListLoaded = (recipesList) => {
+    console.log(recipesList)
+
     setOffset(8)
     setComicsList(recipesList)
     setIsRecipesFound(recipesList === null ? null : recipesList.length)
@@ -73,7 +76,7 @@ const FridgePage = () => {
         <ErrorBoundary>
           <RecipeFilters
             selectedFilter={selectedFilter}
-            onFilterSelected={onFilterSelected}
+            onCategorySelected={onCategorySelected}
             isRecipesFound={isRecipesFound}
             fridgeIngredients={fridgeIngredients}
           />

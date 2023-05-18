@@ -3,12 +3,10 @@ const User = require('../models/User')
 const Recipe = require('../models/Recipe')
 const bcrypt = require('bcryptjs')
 const config = require('config')
-const { v4 } = require('uuid')
 const jwt = require('jsonwebtoken')
 const authMiddleware = require('../middleware/auth.middleware')
 
 const { check, validationResult } = require('express-validator')
-const {ObjectId} = require('mongodb')
 
 const router = new Router()
 
@@ -43,12 +41,16 @@ router.post('/registration',
     const user = new User({
       email,
       password: hashPassword,
-      id: v4()
     })
 
     await user.save()
 
     return res.json({
+      user: {
+        email: user.email,
+        avatar: user.avatar,
+        favorites: user.favorites
+      },
       message: 'User was created'
     })
   } catch (e) {
@@ -80,7 +82,6 @@ router.post('/login', async (req, res) => {
       return res.json({
         token,
         user: {
-          id: user.id,
           email: user.email,
           avatar: user.avatar,
           favorites: user.favorites
@@ -97,14 +98,13 @@ router.post('/login', async (req, res) => {
 router.get('/auth', authMiddleware,
   async (req, res) => {
   try {
-    const user = await User.findOne({ id: req.user.id })
+    const user = await User.findById(req.user.id)
 
     const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' })
 
     return res.json({
       token,
       user: {
-        id: user.id,
         email: user.email,
         avatar: user.avatar,
         favorites: user.favorites
@@ -118,17 +118,17 @@ router.get('/auth', authMiddleware,
   }
 })
 
-router.patch('/update', async (req, res) => {
+router.patch('/update', authMiddleware,
+  async (req, res) => {
   try {
-    const { id } = req.body
-    const recipeId = parseInt(req.body.recipeId)
+    const recipeId = req.body.recipeId
 
-    const user = await User.findOne({ id })
+    const user = await User.findById(req.user.id)
 
     if (user.favorites.includes(recipeId)) {
-      user.favorites = user.favorites.filter(item => item !== recipeId)
+      user.favorites = user.favorites.filter(item => item.toString() !== recipeId)
     } else {
-      const recipe = await Recipe.findOne({ id: recipeId })
+      const recipe = await Recipe.findById(recipeId)
 
       if (recipe) {
         user.favorites.push(recipeId)
@@ -148,12 +148,11 @@ router.patch('/update', async (req, res) => {
   }
 })
 
-router.get('/favorites', async (req, res) => {
+router.get('/favorites', authMiddleware,
+  async (req, res) => {
   try {
-    const { id } = req.query
-
-    const user = await User.findOne({ id })
-    const recipes = await Recipe.find({ id: {$in: user.favorites} })
+    const user = await User.findById(req.user.id)
+    const recipes = await Recipe.find({ _id: {$in: user.favorites} })
 
     return res.json(recipes)
   } catch (e) {

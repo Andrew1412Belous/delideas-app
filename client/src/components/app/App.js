@@ -7,7 +7,7 @@ import {
 import {
   BrowserRouter as Router,
   Route,
-  Routes, useLocation,
+  Routes,
 } from 'react-router-dom'
 
 import AppHeader from '../appHeader/AppHeader'
@@ -17,12 +17,11 @@ import useAuthorizationService from '../../services/AuthorizationService'
 
 const Page404 = lazy(() => import('../pages/404'))
 const MainPage = lazy(() => import('../pages/MainPage'))
-const SingleRecipePage = lazy(() => import('../pages/SingleRecipePage'))
+const SingleRecipePage = lazy(() => import('../pages/singleRecipePage/SingleRecipePage'))
 const FridgePage = lazy(() => import('../pages/FridgePage'))
 
 const Profile = lazy(() => import('../profile/Profile'))
 
-const SingleCharItem = lazy(() => import('../pages/singleCharItem/singleRecipeItem'))
 const Registration = lazy(() => import('../authorization/Registration'))
 const Login = lazy(() => import('../authorization/Login'))
 
@@ -60,7 +59,10 @@ const App = () => {
                       />}/>
                <Route path='/registration' element={isAuth ? null : <Registration userLoggedIn={userLoggedIn}/>}/>
                <Route path='/login' element={isAuth ? null : <Login userLoggedIn={userLoggedIn}/>}/>
-               <Route path='/profile' element={isAuth? <Profile userLoggedIn={userLoggedIn}/> : null}/>
+               <Route path='/profile' element={isAuth? <Profile
+                  userLoggedIn={userLoggedIn}
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}/> : null}/>
                <Route path="*" element={<Page404/>}/>
              </Routes>
            </Suspense>

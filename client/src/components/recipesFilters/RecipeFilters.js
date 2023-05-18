@@ -4,17 +4,17 @@ import setContent from '../../utils/setContent'
 
 import './recipesFilters.scss'
 
-const RecipeFilters = ({ onFilterSelected, isRecipesFound }) => {
+const RecipeFilters = ({ onCategorySelected, isRecipesFound }) => {
   const [filters, setFilters] = useState([])
 
-  const { getAllFilters, setProcess, process } = useRecipeService()
+  const { getAllCategories, setProcess, process } = useRecipeService()
 
   useEffect(() => {
     onRequest()
   }, [])
 
   const onRequest = () => {
-    getAllFilters()
+    getAllCategories()
       .then(onFiltersLoaded)
       .then(() => setProcess('confirmed'))
   }
@@ -39,7 +39,7 @@ const RecipeFilters = ({ onFilterSelected, isRecipesFound }) => {
 
   const renderButtons = (items) => {
     const buttons = items.map((item, i) => {
-      const classNames = item.id === 'all'
+      const classNames = item.name === 'all'
         ? 'button button__main'
         : 'button button__secondary'
 
@@ -52,7 +52,7 @@ const RecipeFilters = ({ onFilterSelected, isRecipesFound }) => {
               itemRefs.current[i] = el
             }}
             onClick={() => {
-              onFilterSelected(item.id)
+              onCategorySelected(item.name)
               focusOnItem(i)
             }}>
             <div className="inner">
@@ -68,7 +68,6 @@ const RecipeFilters = ({ onFilterSelected, isRecipesFound }) => {
       </div>
     )
   }
-
   const elements = useMemo(() => setContent(process, () => renderButtons(filters)), [isRecipesFound])
 
   return (

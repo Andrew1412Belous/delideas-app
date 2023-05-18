@@ -54,7 +54,7 @@ const View = ({ data }) => {
     : ingredients.map((item, i) => {
       return (
         <li key={i} className="char__comics-item">
-          {item}
+          {item[0].toUpperCase() + item.slice(1)}
         </li>
       )
     })
@@ -81,7 +81,7 @@ const View = ({ data }) => {
 }
 
 CharInfo.propTypes = {
-  charId: PropTypes.number
+  charId: PropTypes.string
 }
 
 export default CharInfo

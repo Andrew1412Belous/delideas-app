@@ -1,4 +1,6 @@
 const Recipe = require('../models/Recipe')
+const Ingredient = require('../models/Ingredient')
+const Category = require('../models/Category')
 
 class RecipeController {
   async getAllRecipes (req, res) {
@@ -40,10 +42,21 @@ class RecipeController {
     try {
       const { id } = req.params
 
-      const recipe = await Recipe.findOne({ id })
+      const recipe = await Recipe.findById(id)
+
+      const ingredients = await Ingredient.find({ _id: {$in: recipe.ingredients} })
+      const category = await Category.findById(recipe.category)
 
       return recipe
-        ? res.json(recipe)
+        ? res.json({
+          _id: recipe.id,
+          title: recipe.title,
+          image: recipe.image,
+          times: recipe.times,
+          instructions: recipe.instructions,
+          category: category.label,
+          ingredients: ingredients.map(item => item.name)
+        })
         : res.status(400).json({
           message: "Error, invalid recipe"
         })
@@ -55,24 +68,32 @@ class RecipeController {
 
   async getRecipesByIngredients (req, res) {
     try {
-      const ingredients = req.query.ingredients.split(',')
+      const products = req.query.ingredients.split(',').join(' ').split(' ')
 
-      const recipes = await Recipe.find()
+      const ingredients = await Ingredient.find({ tags: {$in: products }})
+
+      const recipes = await Recipe.find({ ingredients: {$in: ingredients.map(item => item.id)} })
 
       const result = []
 
       for (let i = 0; i < recipes.length; i++) {
-        const isFound = recipes[i].ingredients
-          .some(ingredient => ingredients
-            .some(product => ingredient.indexOf(product) !== -1))
+        const ingredients = await Ingredient.find({ _id: {$in: recipes[i].ingredients }})
+        const category = await Category.findById(recipes[i].category)
 
-        if (isFound) {
-          result.push(recipes[i])
-        }
+        result.push({
+          title: recipes[i].title,
+          image: recipes[i].image,
+          id: recipes[i]._id,
+          category,
+          instructions: recipes[i].instructions,
+          times: recipes[i].times,
+          ingredients: ingredients.map(item => item.name)
+        })
       }
 
       return res.json(result)
-    } catch (e) {
+    }
+     catch (e) {
       console.log(e.message)
       res.send({ message: 'Server error' })
     }

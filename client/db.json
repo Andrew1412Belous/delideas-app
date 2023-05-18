@@ -37286,52 +37286,42 @@
  ],
   "filters": [
     {
-      "id": "baking",
       "name": "baking",
       "label": "Випічка"
     },
     {
-      "id": "salads",
       "name": "salads",
       "label": "Салати"
     },
     {
-      "id": "desserts",
       "name": "desserts",
       "label": "Десерти"
     },
     {
-      "id": "first-dishes",
       "name": "first-dishes",
       "label": "Перші страви"
     },
     {
-      "id": "second-dishes",
       "name": "second-dishes",
       "label": "Другі страви"
     },
     {
-      "id": "snacks",
       "name": "snacks",
       "label": "Закуски"
     },
     {
-      "id": "drinks",
       "name": "drinks",
       "label": "Напої"
     },
     {
-      "id": "preservation",
       "name": "preservation",
       "label": "Консервація та соління"
     },
     {
-      "id": "holiday",
       "name": "holiday",
       "label": "Святкові меню"
     },
     {
-      "id": "all",
       "name": "all",
       "label": "Всі рецепти"
     }
