@@ -1,4 +1,11 @@
 .comics {
+    &__title {
+        margin: 0 auto;
+        text-align: center;
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 29px;
+    }
     &__list {
         margin-top: 45px;
     }

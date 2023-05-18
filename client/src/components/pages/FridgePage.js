@@ -16,6 +16,7 @@ const FridgePage = () => {
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [isRecipesFound, setIsRecipesFound] = useState(null)
   const [comicsList, setComicsList] = useState([])
+  const [filteredRecipes, setFilteredRecipes] = useState([])
   const [offset, setOffset] = useState(8)
 
   const { process, setProcess, getAllRecipesByIngredients } = useRecipeService()
@@ -32,8 +33,18 @@ const FridgePage = () => {
     }
   }, [fridgeIngredients])
 
-  const onCategorySelected = (id) => {
-    setSelectedFilter(id)
+  const onCategorySelected = (name) => {
+    if (name === 'all') {
+      setFilteredRecipes(comicsList)
+      setSelectedFilter(name)
+      setOffset(8)
+    } else {
+      const result = comicsList
+        .filter(item => item.category.name === name)
+
+      setFilteredRecipes(result)
+      setSelectedFilter(name)
+    }
   }
 
   const onRequest = (ingredients) => {
@@ -43,10 +54,9 @@ const FridgePage = () => {
   }
 
   const onComicsListLoaded = (recipesList) => {
-    console.log(recipesList)
-
     setOffset(8)
     setComicsList(recipesList)
+    setFilteredRecipes(recipesList)
     setIsRecipesFound(recipesList === null ? null : recipesList.length)
   }
 
@@ -83,7 +93,7 @@ const FridgePage = () => {
         </ErrorBoundary>
         <ErrorBoundary>
           <FridgeRecipesList
-            comicsList={comicsList}
+            filteredRecipes={filteredRecipes}
             offset={offset}
             setOffset={setOffset}
             fridgeIngredients={fridgeIngredients}

@@ -3,33 +3,34 @@ import setContent from '../../utils/setContent'
 
 import './comicsList.scss'
 
-const FridgeRecipesList = ({ comicsList, offset, setOffset, fridgeIngredients, process }) => {
+const FridgeRecipesList = ({ filteredRecipes, offset, setOffset, fridgeIngredients, process }) => {
   const navigate = useNavigate()
 
   const loadMore = () => {
-    offset + 8 >= comicsList.length
-      ? setOffset(comicsList.length)
+    offset + 8 >= filteredRecipes.length
+      ? setOffset(filteredRecipes.length)
       :  setOffset(offset + 8)
   }
 
   function renderComics (recipes) {
-    const length = recipes.length < 8
-      ? recipes.length
-      : offset
+    if (recipes.length) {
+      const length = recipes.length < 8
+        ? recipes.length
+        : offset
 
-    const items = []
+      const items = []
 
-    for (let i = 0; i < length; i++) {
-      const productsForPurchases = recipes[i].ingredients
-        .filter((item, index) => recipes[i].ingredientsCount.every(i => i !== index))
+      for (let i = 0; i < length; i++) {
+        const productsForPurchases = recipes[i].ingredients
+          .filter((item, index) => recipes[i].ingredientsCount.every(i => i !== index))
 
-      const item = (
+        const item = (
           <li className='comics__item'
-            onClick={() => navigate(`/recipes/${recipes[i].id}`, {
-              state: fridgeIngredients
-            })}
-            tabIndex={0}
-            key={i}>
+              onClick={() => navigate(`/recipes/${recipes[i].id}`, {
+                state: fridgeIngredients
+              })}
+              tabIndex={0}
+              key={i}>
             <img src={recipes[i].image} alt={recipes[i].title} className="comics__item-img" style={{objectFit: 'cover'}}/>
             <div className="comics__item-name">{recipes[i].title}</div>
             <div className="comics__item-name">Потрібно докупити</div>
@@ -44,24 +45,29 @@ const FridgeRecipesList = ({ comicsList, offset, setOffset, fridgeIngredients, p
           </li>
         )
 
-      items.push(item)
-    }
+        items.push(item)
+      }
 
-    return (
-      <ul className="comics__grid">
-        {items}
-      </ul>
-    )
+      return (
+        <ul className="comics__grid">
+          {items}
+        </ul>
+      )
+    } else {
+      return (
+        <div className='comics__title'>За даною категорією рецептів не знайдено</div>
+      )
+    }
   }
 
   return (
     fridgeIngredients
       ? <div className="comics__list">
-          {setContent(process, () => renderComics(comicsList))}
-          {comicsList.length && comicsList.length > 8
+          {setContent(process, () => renderComics(filteredRecipes))}
+          {filteredRecipes.length && filteredRecipes.length > 8
             ? <button
                 disabled={process === 'loading'}
-                style={{'display' : offset === comicsList.length ? 'none' : 'block'}}
+                style={{'display' : offset === filteredRecipes.length ? 'none' : 'block'}}
                 className="button button__main button__long"
                 onClick={loadMore}>
                 <div className="inner">Завантажити ще</div>
