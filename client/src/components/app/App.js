@@ -24,6 +24,7 @@ const Profile = lazy(() => import('../profile/Profile'))
 
 const Registration = lazy(() => import('../authorization/Registration'))
 const Login = lazy(() => import('../authorization/Login'))
+const CreateRecipeForm = lazy(() => import('../admin/createRecipeForm/CreateRecipeForm'))
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({})
@@ -63,6 +64,7 @@ const App = () => {
                   userLoggedIn={userLoggedIn}
                   currentUser={currentUser}
                   setCurrentUser={setCurrentUser}/> : null}/>
+               <Route path='/create-recipe' element={<CreateRecipeForm/>}/>
                <Route path="*" element={<Page404/>}/>
              </Routes>
            </Suspense>

@@ -24,7 +24,7 @@ const RandomRecipe = () => {
   const updateRecipe = () => {
     clearError()
 
-    getRandomRecipe()
+    getRandomRecipe(recipe.id)
       .then(onRecipeLoaded)
       .then(() => setProcess('confirmed'))
   }

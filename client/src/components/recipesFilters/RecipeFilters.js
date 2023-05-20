@@ -2,9 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import useRecipeService from '../../services/RecipeService'
 import setContent from '../../utils/setContent'
 
+import '../spinner/spinner'
+
 import './recipesFilters.scss'
 
-const RecipeFilters = ({ onCategorySelected, isRecipesFound }) => {
+const RecipeFilters = ({ onCategorySelected, isRecipesFound, FridgeProcess }) => {
   const [filters, setFilters] = useState([])
 
   const { getAllCategories, setProcess, process } = useRecipeService()
@@ -48,6 +50,7 @@ const RecipeFilters = ({ onCategorySelected, isRecipesFound }) => {
             key={i}
             tabIndex={0}
             className={classNames}
+            disabled={FridgeProcess === 'loading'}
             ref={el => {
               itemRefs.current[i] = el
             }}

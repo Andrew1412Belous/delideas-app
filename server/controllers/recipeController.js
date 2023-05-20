@@ -1,6 +1,7 @@
 const Recipe = require('../models/Recipe')
 const Ingredient = require('../models/Ingredient')
 const Category = require('../models/Category')
+const User = require('../models/User')
 
 class RecipeController {
   async getAllRecipes (req, res) {
@@ -23,9 +24,17 @@ class RecipeController {
 
   async getRandomRecipe (req, res) {
     try {
+      const { id } = req.query
+
       const recipes = await Recipe.find()
 
-      const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)]
+      const randomIndex = () => Math.floor(Math.random() * recipes.length)
+
+      let randomRecipe = recipes[randomIndex()]
+
+      while (randomRecipe.id.toString() === id) {
+        randomRecipe = recipes[randomIndex()]
+      }
 
       return randomRecipe
         ? res.json(randomRecipe)
@@ -96,6 +105,34 @@ class RecipeController {
      catch (e) {
       console.log(e.message)
       res.send({ message: 'Server error' })
+    }
+  }
+
+  async createRecipe (req, res) {
+    try {
+      const user = await User.findById(req.user.id)
+
+      const recipe = req.body
+
+      for (let i = 0; i < recipe.ingredients.length; i++) {
+        const ingredient = await Ingredient.findOne({ tags: recipe.ingredients[i] })
+
+        console.log(ingredient)
+      }
+
+      // if (user.role === 'admin') {
+      //   console.log(req.body)
+      // } else {
+      //   console.log(20)
+      // }
+      return res.json({
+        recipe
+      })
+    } catch (e) {
+      console.log(e.message)
+      res.send({
+        message: 'Server Error'
+      })
     }
   }
 }

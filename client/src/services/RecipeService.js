@@ -1,4 +1,5 @@
 import { useHttp } from '../hooks/http.hook'
+import axios from 'axios'
 
 const useRecipeService = () => {
   const { request, clearError, process, setProcess } = useHttp()
@@ -6,8 +7,8 @@ const useRecipeService = () => {
   const _apiBase = 'http://localhost:5000'
   const _baseRecipeOffset = 0
 
-  const getRandomRecipe = async () => {
-    const result = await request(`${_apiBase}/random`)
+  const getRandomRecipe = async (id) => {
+    const result = await request(`${_apiBase}/random?id=${id}`)
 
     return _transformRecipe(result)
   }
@@ -70,6 +71,21 @@ const useRecipeService = () => {
 
   const getAllCategories = async () => request(`${_apiBase}/categories`)
 
+  const createRecipe = async (recipe) => {
+    try {
+      const response = await axios.post(`${_apiBase}/add-recipe`, recipe,
+        {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+      )
+
+      alert('Рецепт додано')
+
+      return response.data
+    } catch (e) {
+      alert('Помилка')
+      console.log(e)
+    }
+  }
+
   const _transformRecipe = (recipe) => ({
       id: recipe["_id"],
       title: recipe.title,
@@ -87,6 +103,7 @@ const useRecipeService = () => {
     getAllRecipesByIngredients,
     getRecipeByIngredients,
     getRandomRecipe,
+    createRecipe,
     clearError,
     process,
     setProcess,

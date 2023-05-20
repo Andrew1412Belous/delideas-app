@@ -11,6 +11,8 @@ import { useLocation } from 'react-router-dom'
 const FridgePage = () => {
   const location = useLocation()
 
+  console.log(location.state)
+
   const [fridgeIngredients, setFridgeIngredients] = useState('')
 
   const [selectedFilter, setSelectedFilter] = useState('all')
@@ -85,9 +87,9 @@ const FridgePage = () => {
         </ErrorBoundary>
         <ErrorBoundary>
           <RecipeFilters
-            selectedFilter={selectedFilter}
             onCategorySelected={onCategorySelected}
             isRecipesFound={isRecipesFound}
+            FridgeProcess={process}
             fridgeIngredients={fridgeIngredients}
           />
         </ErrorBoundary>

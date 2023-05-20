@@ -53,7 +53,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
 
     const backLink = location.state
       ? '/fridge'
-      : '/'
+      : '-1'
 
     const isFromFridgePage = data.hasOwnProperty('ingredientsCount')
 
@@ -111,9 +111,11 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
         </div>
         <div className="char__btns">
           <div className="button button__main single-comic-link"
-               onClick={() => navigate(`${backLink}`, {
-                 state: location.state
-               })}>
+               onClick={() => location.state
+                ? navigate(`${backLink}`, {
+                   state: location.state
+                 })
+                : navigate(-1)}>
             <div className="inner">Повернутися назад</div>
           </div>
           {isAuth &&

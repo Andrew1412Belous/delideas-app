@@ -1,11 +1,32 @@
 import { useNavigate } from 'react-router-dom'
 
-import './profile.scss'
+
+
 import AppBanner from '../appBanner/AppBanner'
 import useAuthorizationService from '../../services/AuthorizationService'
 import { useEffect, useState } from 'react'
 
 import avatarLogo from '../../assets/avatar.svg'
+
+
+import './profile.scss'
+import Spinner from '../spinner/spinner'
+import ErrorMessage from '../errorMessage/errorMessage'
+
+const setContent = (process, Component, newItemLoading) => {
+  switch (process) {
+    case 'waiting':
+      return <Spinner/>
+    case 'loading':
+      return <Spinner/>
+    case 'confirmed':
+      return <Component/>
+    case 'error':
+      return <ErrorMessage/>
+    default:
+      throw new Error('Unexpected process state')
+  }
+}
 
 const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
   const [favoriteRecipes, setFavoriteRecipes] = useState([])
@@ -35,10 +56,15 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
 
   const updateFavoriteRecipes = () => {
     getFavorites()
-      .then(setFavoriteRecipes)
+      .then(onFavoritesLoaded)
+  }
+
+  const onFavoritesLoaded = (recipes) => {
+    setFavoriteRecipes(recipes)
   }
 
   const renderRecipes = (items) => {
+    console.log(items)
     if (items.length) {
       const recipes = items.map((item, index) => {
         const recipeName = item.title.length > 30
@@ -46,29 +72,29 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
           : item.title
 
         return (
-          <li className="char__item"
+          <li className="comics__item"
               tabIndex={0}
               key={index}
-              onClick={() => navigate(`/recipes/${recipes[index].id}`)}
+              onClick={() => navigate(`/recipes/${items[index]._id}`)}
               onKeyPress={(e) => {
                 if (e.key === ' ' || e.key === "Enter") {
                   navigate(`/recipes/${recipes[index].id}`)
                 }
               }}>
-            <img src={item.image} alt={item.title} style={{objectFit: 'cover'}}/>
-            <div className="char__name">{recipeName}</div>
+            <img src={item.image} alt={item.title} className="comics__item-img" style={{objectFit: 'cover'}}/>
+            <div className="comics__item-name">{recipeName}</div>
           </li>
         )
       })
 
       return (
-        <ul className="char__grid">
+        <ul className="comics__grid">
           {recipes}
         </ul>
       )
     } else {
       return (
-        <div className="char__comics">Немає рецептів в бажаних</div>
+        <div className="comics__title">Немає рецептів в бажаних</div>
       )
     }
   }
@@ -86,6 +112,7 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
       <AppBanner/>
       <div className="profile">
         <img src={avatar} alt='user avatar' className="single-comic__char-img"/>
+        <input accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>
         <div className="profile-info">
           <h2 className="single-comic__name">{`email: ${currentUser.email}`}</h2>
         </div>
@@ -96,7 +123,14 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
               Вийти з аккаунта
             </div>
           </div>
-          <input accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>
+          {currentUser.role === 'admin' &&
+            <div className="button button__main single-comic-link"
+                 onClick={() => navigate('/create-recipe')}>
+              <div className="inner">
+                Додати рецепт
+              </div>
+            </div>
+          }
         </div>
         {renderRecipes(favoriteRecipes)}
         {/*<ul className="comics__grid">*/}
