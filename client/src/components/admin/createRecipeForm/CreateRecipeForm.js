@@ -4,10 +4,13 @@ import * as Yup from 'yup'
 import './createRecipeForm.scss'
 import useRecipeService from '../../../services/RecipeService'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const CreateRecipeForm = () => {
   const [filters, setFilters] = useState([])
   const [inputValue, setInputValue] = useState('')
+
+  const navigate = useNavigate()
 
   const { getAllCategories, setProcess, createRecipe } = useRecipeService()
 
@@ -56,11 +59,11 @@ const CreateRecipeForm = () => {
       ...values,
       image,
       ingredients: values.ingredients.split(', '),
-      instructions: values.instructions.split(' '),
+      instructions: values.instructions.split('. '),
     }
 
     createRecipe(recipe)
-      .then(response => console.log(response))
+      .then(() => navigate(-1))
   }
 
   return (

@@ -17,10 +17,10 @@ app.use(fileUpload({}))
 app.use(corsMiddleware)
 app.use(express.json())
 app.use(express.static('static'))
+app.use('/', recipeRouter)
 app.use('/auth', authRouter)
 app.use('/files', fileRouter)
 app.use('/categories', categoryRouter)
-app.use('/', recipeRouter)
 
 const start = async () => {
   try {

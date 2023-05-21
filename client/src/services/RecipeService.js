@@ -86,6 +86,24 @@ const useRecipeService = () => {
     }
   }
 
+  const deleteRecipe = async (recipeId) => {
+    try {
+      const response = await axios.delete(`${_apiBase}/delete-recipe/${recipeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+
+      alert('Рецепт видалено')
+
+      return response.data.message
+    } catch (e) {
+      alert('Помилка')
+      console.log(e)
+    }
+  }
+
   const _transformRecipe = (recipe) => ({
       id: recipe["_id"],
       title: recipe.title,
@@ -104,6 +122,7 @@ const useRecipeService = () => {
     getRecipeByIngredients,
     getRandomRecipe,
     createRecipe,
+    deleteRecipe,
     clearError,
     process,
     setProcess,

@@ -20,7 +20,14 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
 
   const { id } = useParams()
 
-  const { getRecipe, getRecipeByIngredients, clearError, process, setProcess } = useRecipeService()
+  const {
+    getRecipe,
+    getRecipeByIngredients,
+    deleteRecipe,
+    clearError,
+    process,
+    setProcess,
+  } = useRecipeService()
   const { updateFavorites } = useAuthorizationService()
 
   useEffect(() => updateData(), [id])
@@ -78,7 +85,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
       ? instructions.map((item, i) => {
         return (
           <li key={i} className="single-comic__descr">
-            {i+1}) {item}
+            {i+1}) {item[0].toUpperCase() + item.slice(1)}
           </li>
         )
       })
@@ -129,6 +136,22 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
               }
               </div>
             </div>
+          }
+          {currentUser.role === 'admin' &&
+            <>
+              <div className="button button__main single-comic-link"
+                   onClick={() => setFavorite()}>
+                <div className="inner">
+                  Змінити рецепт
+                </div>
+              </div>
+              <div className="button button__main single-comic-link"
+                   onClick={() => deleteRecipe(id).then(() => navigate(-1))}>
+                <div className="inner">
+                  Видалити рецепт
+                </div>
+              </div>
+            </>
           }
         </div>
       </div>

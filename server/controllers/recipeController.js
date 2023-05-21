@@ -112,22 +112,79 @@ class RecipeController {
     try {
       const user = await User.findById(req.user.id)
 
-      const recipe = req.body
+      if (user.role === 'admin') {
+        const recipe = req.body
 
-      for (let i = 0; i < recipe.ingredients.length; i++) {
-        const ingredient = await Ingredient.findOne({ tags: recipe.ingredients[i] })
+        for (let i = 0; i < req.body.ingredients.length; i++) {
+          const ingredient = await Ingredient.findOne({ name: req.body.ingredients[i] })
 
-        console.log(ingredient)
+          if (ingredient === null) {
+            let tags = ''
+
+            if (req.body.ingredients[i].indexOf(' ') !== -1 && req.body.ingredients[i].indexOf('(') === -1) {
+              tags = req.body.ingredients[i].split(' ')
+            } else if (req.body.ingredients[i].indexOf('-') !== -1) {
+              tags = req.body.ingredients[i].split('-')
+            } else if (req.body.ingredients[i].indexOf('(') !== -1) {
+              tags = req.body.ingredients[i].replace(/[()]/g, '').split(' ')
+            } else {
+              tags = req.body.ingredients[i].split()
+            }
+
+            const newIngredient = new Ingredient({
+              name: req.body.ingredients[i],
+              tags
+            })
+
+            await newIngredient.save()
+          }
+        }
+
+        const ingredients = await Ingredient.find({ name: {$in: recipe.ingredients} })
+        const category = await Category.findOne({ name: recipe.category })
+
+        console.log(ingredients)
+
+        const newRecipe = new Recipe({
+          title: recipe.title,
+          times: recipe.times,
+          instructions: recipe.instructions,
+          ingredients: ingredients.map(item => item.id),
+          image: recipe.image,
+          category: category.id,
+        })
+
+        console.log(newRecipe)
+
+        await newRecipe.save()
+
+        return res.json({
+          message: 'Рецепт створено'
+        })
+      } else {
+        return res.status(400).send({ message: 'Not access' })
       }
-
-      // if (user.role === 'admin') {
-      //   console.log(req.body)
-      // } else {
-      //   console.log(20)
-      // }
-      return res.json({
-        recipe
+    } catch (e) {
+      console.log(e.message)
+      res.send({
+        message: 'Server Error'
       })
+    }
+  }
+
+  async deleteRecipe (req, res) {
+    try {
+      const user = await User.findById(req.user.id)
+
+      if (user.role === 'admin') {
+        const { id } = req.params
+
+        const recipe = await Recipe.findByIdAndDelete(id)
+
+        return res.send({
+          message: 'Recipe was deleted'
+        })
+      }
     } catch (e) {
       console.log(e.message)
       res.send({

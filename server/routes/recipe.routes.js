@@ -14,6 +14,7 @@ router.get('/random', recipeController.getRandomRecipe)
 router.get('/recipe/:id', recipeController.getRecipe)
 router.get('/search', recipeController.getRecipesByIngredients)
 router.post('/add-recipe', authMiddleware, recipeController.createRecipe)
+router.delete('/delete-recipe/:id', authMiddleware, recipeController.deleteRecipe)
 
 router.post('/products', async (req, res) => {
   try {
