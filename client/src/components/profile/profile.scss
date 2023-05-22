@@ -5,33 +5,22 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  //align-items: center;
   background-color: white;
   border-radius: 20px;
   border: 2px solid $main-color;
   padding: 30px;
   align-self: center;
   margin-top: 40px;
+  &-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  &-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  //&__header {
-  //  font-size: 30px;
-  //  font-weight: 700;
-  //}
-  //
-  //input {
-  //  margin: 10px 20px;
-  //}
-  //
-  //&__btn {
-  //  border: none;
-  //  background-color: $main-color;
-  //  border-radius: 8px;
-  //  color: white;
-  //  font-weight: 700;
-  //  padding: 5px 10px;
-  //  align-self: flex-end;
-  //  margin-top: 10px;
-  //}
+  }
 }
 
 .single-comic {

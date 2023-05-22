@@ -64,7 +64,7 @@ const App = () => {
                   userLoggedIn={userLoggedIn}
                   currentUser={currentUser}
                   setCurrentUser={setCurrentUser}/> : null}/>
-               <Route path='/create-recipe' element={<CreateRecipeForm/>}/>
+               <Route path='/recipe-editor' element={<CreateRecipeForm/>}/>
                <Route path="*" element={<Page404/>}/>
              </Routes>
            </Suspense>

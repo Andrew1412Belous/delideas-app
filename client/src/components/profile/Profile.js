@@ -111,26 +111,28 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
     <>
       <AppBanner/>
       <div className="profile">
-        <img src={avatar} alt='user avatar' className="single-comic__char-img"/>
-        <input accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>
         <div className="profile-info">
-          <h2 className="single-comic__name">{`email: ${currentUser.email}`}</h2>
-        </div>
-        <div className="char__btns">
-          <div className="button button__main single-comic-link"
-               onClick={() => logout()}>
-            <div className="inner">
-              Вийти з аккаунта
-            </div>
+          <div className="profile-logo">
+            <h2 className="single-comic__name">{`email: ${currentUser.email}`}</h2>
+            <img src={avatar} alt='user avatar' className="single-comic__char-img"/>
+            <input accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>
           </div>
-          {currentUser.role === 'admin' &&
+          <div className="char__btns">
             <div className="button button__main single-comic-link"
-                 onClick={() => navigate('/create-recipe')}>
+                 onClick={() => logout()}>
               <div className="inner">
-                Додати рецепт
+                Вийти з аккаунта
               </div>
             </div>
-          }
+            {currentUser.role === 'admin' &&
+              <div className="button button__main single-comic-link"
+                   onClick={() => navigate('/recipe-editor')}>
+                <div className="inner">
+                  Додати рецепт
+                </div>
+              </div>
+            }
+          </div>
         </div>
         {renderRecipes(favoriteRecipes)}
         {/*<ul className="comics__grid">*/}

@@ -104,6 +104,24 @@ const useRecipeService = () => {
     }
   }
 
+  const changeRecipe = async (recipe, recipeId) => {
+    try {
+      const response = await axios.patch(`${_apiBase}/change-recipe/${recipeId}`, recipe,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+
+      alert('Рецепт змінено')
+
+      return response.data.message
+    } catch (e) {
+      alert('Помилка')
+      console.log(e)
+    }
+  }
+
   const _transformRecipe = (recipe) => ({
       id: recipe["_id"],
       title: recipe.title,
@@ -123,6 +141,7 @@ const useRecipeService = () => {
     getRandomRecipe,
     createRecipe,
     deleteRecipe,
+    changeRecipe,
     clearError,
     process,
     setProcess,

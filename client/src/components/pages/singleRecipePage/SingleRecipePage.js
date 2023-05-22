@@ -52,6 +52,8 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
   }
 
   const onDataLoaded = (data) => {
+    console.log(data)
+
     setData(data)
   }
 
@@ -140,7 +142,9 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
           {currentUser.role === 'admin' &&
             <>
               <div className="button button__main single-comic-link"
-                   onClick={() => setFavorite()}>
+                   onClick={() => navigate('/recipe-editor', {
+                     state: data
+                   })}>
                 <div className="inner">
                   Змінити рецепт
                 </div>
