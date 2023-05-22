@@ -15,13 +15,16 @@
     line-height: 24px;
     color: red;
   }
+
+  background: $bg;
   margin: 0 auto;
   padding: 35px;
   width: 700px;
   min-height: 500px;
   border: 2px solid $main-color;
   border-radius: 20px;
-  box-shadow: 0 9px 23px 0 rgb(0 0 0 / 3%);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
+  //box-shadow: 0 9px 23px 0 rgb(0 0 0 / 3%);
   h2 {
     text-align: center;
     font-size: 28px;
@@ -38,8 +41,8 @@
     height: 50px;
     margin-top: 15px;
     padding: 5px 15px;
-    background: #fff;
-    border: 1px solid #e2e2e2;
+    background: $bg;
+    border: 1px solid $main-color;
     color: #353535;
     border-radius: 10px;
     font-size: 22px;
@@ -53,8 +56,8 @@
     padding: 0 20px;
     font-size: 18px;
     appearance: none;
-    background: #fff;
-    border: 1px solid #e2e2e2;
+    background: $bg;
+    border: 1px solid $main-color;
     color: #353535;
     border-radius: 10px;
     cursor: pointer;
@@ -68,8 +71,8 @@
     margin-top: 15px;
     padding: 15px 20px;
     font-size: 18px;
-    background: #fff;
-    border: 1px solid #e2e2e2;
+    background: $bg;
+    border: 1px solid $main-color;
     color: #353535;
     border-radius: 10px;
     resize:none;
@@ -83,6 +86,7 @@
     width: 25px;
     height: 25px;
     margin-top: 0;
+    background: $bg;
     margin-right: 15px;
   }
   .checkbox {
@@ -98,10 +102,14 @@
     color: #fff;
     border: 0;
     border-radius: 10px;
-    background-image: linear-gradient(257deg, #f59c07, #f57507);
+    background: $main-color;
+    //background-image: linear-gradient(257deg, #f59c07, #f57507);
   }
   .error {
-    color: #e53e3e;
+    color: #b41919;
     margin-top: 8px;
+  }
+  input[type="file"] {
+    background: $bg;
   }
 }

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet'
 import AppBanner from '../appBanner/AppBanner'
-import CharSearchForm from '../charSearchForm/CharSearchForm'
+import RecipeSearchForm from '../recipeSearchForm/RecipeSearchForm'
 import { useEffect, useState } from 'react'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
 import FridgeRecipesList from '../fridgeRecipesList/fridgeRecipesList'
@@ -76,7 +76,7 @@ const FridgePage = () => {
       <AppBanner/>
       <div className="content">
         <ErrorBoundary>
-          <CharSearchForm
+          <RecipeSearchForm
             onIngredientsIntroduced={onIngredientsIntroduced}
             isRecipesFound={isRecipesFound}
             process={process}

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import setContent from '../../utils/setContent'
 
-import './comicsList.scss'
+import './fridgeRecipeList.scss'
 
 const FridgeRecipesList = ({ filteredRecipes, offset, setOffset, fridgeIngredients, process }) => {
   const navigate = useNavigate()

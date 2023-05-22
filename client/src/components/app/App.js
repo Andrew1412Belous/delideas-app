@@ -1,6 +1,7 @@
 import {
   lazy,
-  Suspense, useEffect,
+  Suspense,
+  useEffect,
   useState
 } from 'react'
 
@@ -19,7 +20,6 @@ const Page404 = lazy(() => import('../pages/404'))
 const MainPage = lazy(() => import('../pages/MainPage'))
 const SingleRecipePage = lazy(() => import('../pages/singleRecipePage/SingleRecipePage'))
 const FridgePage = lazy(() => import('../pages/FridgePage'))
-
 const Profile = lazy(() => import('../pages/profile/Profile'))
 
 const Registration = lazy(() => import('../authorization/Registration'))
@@ -60,7 +60,7 @@ const App = () => {
                       />}/>
                <Route path='/registration' element={isAuth ? null : <Registration userLoggedIn={userLoggedIn}/>}/>
                <Route path='/login' element={isAuth ? null : <Login userLoggedIn={userLoggedIn}/>}/>
-               <Route path='/profile' element={isAuth? <Profile
+               <Route path='/profile' element={isAuth ? <Profile
                   userLoggedIn={userLoggedIn}
                   currentUser={currentUser}
                   setCurrentUser={setCurrentUser}/> : null}/>

@@ -54,7 +54,7 @@ const View = ({ data }) => {
   const { title, image, instructions, id } = data
 
   const name = title.length > 30 ? `${title.slice(0, 30)}...` : title
-  const descr = instructions[0].length > 150 ? `${instructions[0].slice(0, 150)}...` : instructions[0]
+  const descr = instructions.join(' ').length > 150 ? `${instructions.join(' ').slice(0, 150)}...` : instructions.join(' ')
 
   return (
     <div className="randomchar__block">

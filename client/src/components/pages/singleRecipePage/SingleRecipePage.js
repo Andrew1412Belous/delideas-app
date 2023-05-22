@@ -1,4 +1,9 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import {
+  useLocation,
+  useNavigate,
+  useParams
+} from 'react-router-dom'
+
 import {
   useEffect,
   useState,
@@ -8,9 +13,9 @@ import AppBanner from '../../appBanner/AppBanner'
 import setContent from '../../../utils/setContent'
 import useRecipeService from '../../../services/RecipeService'
 import { Helmet } from 'react-helmet'
+import useAuthorizationService from '../../../services/AuthorizationService'
 
 import './singleRecipePage.scss'
-import useAuthorizationService from '../../../services/AuthorizationService'
 
 const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
   const [data, setData] = useState(null)
@@ -28,6 +33,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
     process,
     setProcess,
   } = useRecipeService()
+
   const { updateFavorites } = useAuthorizationService()
 
   useEffect(() => updateData(), [id])
@@ -52,8 +58,6 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
   }
 
   const onDataLoaded = (data) => {
-    console.log(data)
-
     setData(data)
   }
 

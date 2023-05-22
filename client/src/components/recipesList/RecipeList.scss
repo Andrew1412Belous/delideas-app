@@ -22,7 +22,10 @@
         padding: 15px;
         cursor: pointer;
         transition: 0.3s transform;
+        border-radius: 15px;
         img {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
             width: 200px;
             height: 200px;
             object-fit: cover;
@@ -52,6 +55,6 @@
         font-size: 22px;
         line-height: 29px;
         text-transform: uppercase;
-        color: #fff;
+        color: #e3e3e1;
     }
 }

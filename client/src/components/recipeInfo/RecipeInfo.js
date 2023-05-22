@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 
 import setContent from '../../utils/setContent'
 
-import './charInfo.scss';
+import './recipeInfo.scss';
 import useRecipeService from '../../services/RecipeService'
 
-const CharInfo = (props) => {
+const RecipeInfo = (props) => {
   const [recipe, setRecipe] = useState(null)
 
   const {
@@ -80,8 +80,8 @@ const View = ({ data }) => {
   )
 }
 
-CharInfo.propTypes = {
+RecipeInfo.propTypes = {
   charId: PropTypes.string
 }
 
-export default CharInfo
+export default RecipeInfo

@@ -9,9 +9,9 @@ import { useLocation } from 'react-router-dom'
 
 import * as Yup from 'yup'
 
-import './charSearchForm.scss'
+import './recipeSearchForm.scss'
 
-const CharSearchForm = ({ isRecipesFound, onIngredientsIntroduced, process, fridgeIngredients }) => {
+const RecipeSearchForm = ({ isRecipesFound, onIngredientsIntroduced, process, fridgeIngredients }) => {
   const location = useLocation()
 
   let results = isRecipesFound === null
@@ -64,4 +64,4 @@ const CharSearchForm = ({ isRecipesFound, onIngredientsIntroduced, process, frid
   )
 }
 
-export default CharSearchForm
+export default RecipeSearchForm

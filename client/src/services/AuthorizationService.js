@@ -47,7 +47,6 @@ const useAuthorizationService = () => {
 
       return response.data.user
     } catch (e) {
-      // alert(e.response.data.message)
       localStorage.removeItem('token')
     }
   }

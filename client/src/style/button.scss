@@ -16,6 +16,7 @@
         margin: 45px auto 0 auto;
     }
     .inner {
+        color: #e3e3e1;
         position: relative;
         background-color: $main-color;
         line-height: 18px;
@@ -47,7 +48,7 @@
     }
     &__main, &__secondary {
         &:hover {
-            color: #fff;
+            color: $bg;
         }
     }
     &__secondary {

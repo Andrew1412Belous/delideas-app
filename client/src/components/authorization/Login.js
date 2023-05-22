@@ -1,10 +1,9 @@
 import Input from '../../utils/input/Input'
 import { useState } from 'react'
-
-import './authorization.scss'
 import useAuthorizationService from '../../services/AuthorizationService'
 import { useNavigate } from 'react-router-dom'
 
+import './authorization.scss'
 const Login = ({ userLoggedIn }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")

@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import AppBanner from '../../appBanner/AppBanner'
 import useAuthorizationService from '../../../services/AuthorizationService'
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 
 import avatarLogo from '../../../assets/avatar.svg'
 
 import './profile.scss'
-
 
 const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
   const [favoriteRecipes, setFavoriteRecipes] = useState([])
@@ -28,8 +28,6 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
 
     uploadAvatar(file)
       .then(response => {
-        console.log(response)
-
         setCurrentUser(response)
       })
   }
@@ -44,7 +42,6 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
   }
 
   const renderRecipes = (items) => {
-    console.log(items)
     if (items.length) {
       const recipes = items.map((item, index) => {
         const recipeName = item.title.length > 30
@@ -89,6 +86,13 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
 
   return (
     <>
+      <Helmet>
+        <meta
+          name="description"
+          content="profile"
+        />
+        <title>Profile</title>
+      </Helmet>
       <AppBanner/>
       <div className="profile">
         <div className="profile-info">

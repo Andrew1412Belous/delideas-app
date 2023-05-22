@@ -1,11 +1,18 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik'
+import {
+  ErrorMessage,
+  Field,
+  Form,
+  Formik
+} from 'formik'
+
 import * as Yup from 'yup'
 
-import './createRecipeForm.scss'
 import useRecipeService from '../../../services/RecipeService'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Spinner from '../../spinner/spinner'
+
+import './createRecipeForm.scss'
 
 const CreateRecipeForm = () => {
   const navigate = useNavigate()
@@ -67,15 +74,11 @@ const CreateRecipeForm = () => {
       image,
       ingredients: values.ingredients.split(', '),
       instructions: values.instructions.split('. ').map((item, i, arr) => {
-         if (i === arr.length - 1) {
-           if (item.indexOf('.') !== -1) {
-             return item
-           } else {
-             return `${item}.`
-           }
-         }
-
-         return `${item}.`
+        return i === arr.length - 1
+          ? item.indexOf('.') !== -1
+            ? item
+            : `${item}.`
+          : `${item}.`
       })
     }
 

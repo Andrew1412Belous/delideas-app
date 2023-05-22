@@ -1,8 +1,6 @@
 const User = require('../models/User')
 const config = require('config')
 const Uuid = require('uuid')
-const fs = require('fs')
-const Url = require('url')
 
 class FileController {
   async uploadAvatar (req, res) {

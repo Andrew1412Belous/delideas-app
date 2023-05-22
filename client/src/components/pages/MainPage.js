@@ -1,19 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Helmet } from 'react-helmet'
 
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
 import RandomRecipe from '../randomRecipe/RandomRecipe'
 import RecipeList from '../recipesList/RecipeList'
-import CharInfo from '../charInfo/CharInfo'
+import RecipeInfo from '../recipeInfo/RecipeInfo'
 
 import decoration from '../../resources/img/bg.png'
 
 const MainPage = () => {
   const [selectedRecipe, setRecipe] = useState(null)
-
-  useEffect(() => {
-    sessionStorage.removeItem('fridge-filter')
-  }, [])
 
   const onRecipeSelected = (id) => {
     setRecipe(id)
@@ -36,7 +32,7 @@ const MainPage = () => {
             <RecipeList onRecipeSelected={onRecipeSelected}/>
           </ErrorBoundary>
           <ErrorBoundary>
-            <CharInfo recipeId={selectedRecipe}/>
+            <RecipeInfo recipeId={selectedRecipe}/>
           </ErrorBoundary>
       </div>
       <img className="bg-decoration" src={decoration} alt="bg"/>
