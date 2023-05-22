@@ -42,23 +42,15 @@ const useRecipeService = () => {
   }
 
   const filterRecipesByIngredient = (item, ingredients) => {
-    const products = item.ingredients
-      .map(product => product.toLowerCase()
-        .replace(/[\,./()^0-9]/g, '')
-          .split(' ')
-      .filter(word => word.length >= 3 && !parseInt(word)))
-
     let ingredientsCount = []
     let currentProduct = ''
 
     ingredients.forEach(ingredient => {
-      products.forEach((product, i) => {
-        if (product.includes(ingredient)) {
-          if (currentProduct !== ingredient) {
-            ingredientsCount.push(i)
+      item.ingredients.forEach((product, i) => {
+        if (product.indexOf(ingredient) !== -1 && currentProduct !== ingredient) {
+          ingredientsCount.push(i)
 
-            currentProduct = ingredient
-          }
+          currentProduct = ingredient
         }
       })
     })

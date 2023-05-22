@@ -1,32 +1,12 @@
 import { useNavigate } from 'react-router-dom'
-
-
-
-import AppBanner from '../appBanner/AppBanner'
-import useAuthorizationService from '../../services/AuthorizationService'
+import AppBanner from '../../appBanner/AppBanner'
+import useAuthorizationService from '../../../services/AuthorizationService'
 import { useEffect, useState } from 'react'
 
-import avatarLogo from '../../assets/avatar.svg'
-
+import avatarLogo from '../../../assets/avatar.svg'
 
 import './profile.scss'
-import Spinner from '../spinner/spinner'
-import ErrorMessage from '../errorMessage/errorMessage'
 
-const setContent = (process, Component, newItemLoading) => {
-  switch (process) {
-    case 'waiting':
-      return <Spinner/>
-    case 'loading':
-      return <Spinner/>
-    case 'confirmed':
-      return <Component/>
-    case 'error':
-      return <ErrorMessage/>
-    default:
-      throw new Error('Unexpected process state')
-  }
-}
 
 const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
   const [favoriteRecipes, setFavoriteRecipes] = useState([])
@@ -45,7 +25,7 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
 
   const changeHandler = (e) => {
     const file = e.target.files[0]
-    // console.log(file)
+
     uploadAvatar(file)
       .then(response => {
         console.log(response)
@@ -135,9 +115,6 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
           </div>
         </div>
         {renderRecipes(favoriteRecipes)}
-        {/*<ul className="comics__grid">*/}
-
-        {/*</ul>*/}
       </div>
     </>
   )

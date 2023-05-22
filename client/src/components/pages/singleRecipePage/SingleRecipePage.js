@@ -139,7 +139,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
               </div>
             </div>
           }
-          {currentUser.role === 'admin' &&
+          {isAuth && currentUser.role === 'admin' &&
             <>
               <div className="button button__main single-comic-link"
                    onClick={() => navigate('/recipe-editor', {

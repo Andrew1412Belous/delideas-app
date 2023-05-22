@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model, ObjectId } = require('mongoose')
 
 const Ingredient = new Schema({
   name: { type: String, required: true, unique: true },
-  tags: [{ type: String }]
+  tags: [{ type: ObjectId }]
 })
 
 module.exports = model('Ingredient', Ingredient)

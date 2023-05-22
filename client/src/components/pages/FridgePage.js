@@ -11,8 +11,6 @@ import { useLocation } from 'react-router-dom'
 const FridgePage = () => {
   const location = useLocation()
 
-  console.log(location.state)
-
   const [fridgeIngredients, setFridgeIngredients] = useState('')
 
   const [selectedFilter, setSelectedFilter] = useState('all')

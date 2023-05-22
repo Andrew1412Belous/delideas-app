@@ -1,11 +1,11 @@
 import MainPage from './MainPage'
-import ComicsPage from './ComicsPage'
 import Page404 from './404'
-import SingleComicItem from './singleComicItem/SingleComicItem'
+import SingleRecipePage from './singleRecipePage/SingleRecipePage'
+import Profile from './profile/Profile'
 
 export {
   MainPage,
-  ComicsPage,
   Page404,
-  SingleComicItem,
+  SingleRecipePage,
+  Profile,
 }

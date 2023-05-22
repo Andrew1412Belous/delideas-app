@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import ErrorMessage from '../errorMessage/errorMessage'
 import Spinner from '../spinner/spinner'
 
-import './charList.scss';
+import './RecipeList.scss';
 import useRecipeService from '../../services/RecipeService'
 
 const setContent = (process, Component, newItemLoading) => {
@@ -28,7 +28,7 @@ const setContent = (process, Component, newItemLoading) => {
   }
 }
 
-const CharList = (props) => {
+const RecipeList = (props) => {
   const [recipesList, setRecipesList] = useState([])
   const [newItemLoading, setNewItemLoading] = useState(false)
   const [offset, setOffset] = useState(0)
@@ -115,8 +115,8 @@ const CharList = (props) => {
   )
 }
 
-CharList.propTypes = {
+RecipeList.propTypes = {
   onRecipeSelected: PropTypes.func.isRequired
 }
 
-export default CharList;
+export default RecipeList;

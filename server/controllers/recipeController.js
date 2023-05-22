@@ -2,6 +2,7 @@ const Recipe = require('../models/Recipe')
 const Ingredient = require('../models/Ingredient')
 const Category = require('../models/Category')
 const User = require('../models/User')
+const Tag = require('../models/Tag')
 
 class RecipeController {
   async getAllRecipes (req, res) {
@@ -79,7 +80,9 @@ class RecipeController {
     try {
       const products = req.query.ingredients.split(',').join(' ').split(' ')
 
-      const ingredients = await Ingredient.find({ tags: {$in: products }})
+      const tags = await Tag.find({ name: {$in: products }})
+
+      const ingredients = await Ingredient.find({ tags: {$in: tags.map(item => item.id) }})
 
       const recipes = await Recipe.find({ ingredients: {$in: ingredients.map(item => item.id)} })
 
@@ -134,9 +137,25 @@ class RecipeController {
                 tags = req.body.ingredients[i].split()
               }
 
+              for (let tag of tags) {
+                const isNewTag = await Tag.findOne({ name: tag })
+
+                if (isNewTag === null) {
+                  const newTag = new Tag({
+                    name: tag
+                  })
+
+                  await newTag.save()
+                }
+              }
+
+              const newTags = await Tag.find({ name: {$in: tags} })
+
+              const res = newTags.map(item => item.id)
+
               const newIngredient = new Ingredient({
                 name: req.body.ingredients[i],
-                tags
+                tags: res
               })
 
               await newIngredient.save()
@@ -221,9 +240,26 @@ class RecipeController {
                 tags = req.body.ingredients[i].split()
               }
 
+
+              for (let tag of tags) {
+                const isNewTag = await Tag.findOne({ name: tag })
+
+                if (isNewTag === null) {
+                  const newTag = new Tag({
+                    name: tag
+                  })
+
+                  await newTag.save()
+                }
+              }
+
+              const newTags = await Tag.find({ name: {$in: tags} })
+
+              const res = newTags.map(item => item.id)
+
               const newIngredient = new Ingredient({
                 name: req.body.ingredients[i],
-                tags
+                tags: res
               })
 
               await newIngredient.save()

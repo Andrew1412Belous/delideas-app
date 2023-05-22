@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
 import RandomRecipe from '../randomRecipe/RandomRecipe'
-import CharList from '../recipesList/CharList'
+import RecipeList from '../recipesList/RecipeList'
 import CharInfo from '../charInfo/CharInfo'
 
 import decoration from '../../resources/img/bg.png'
@@ -33,7 +33,7 @@ const MainPage = () => {
       </ErrorBoundary>
       <div className="char__content">
           <ErrorBoundary>
-            <CharList onRecipeSelected={onRecipeSelected}/>
+            <RecipeList onRecipeSelected={onRecipeSelected}/>
           </ErrorBoundary>
           <ErrorBoundary>
             <CharInfo recipeId={selectedRecipe}/>

@@ -20,7 +20,7 @@ const MainPage = lazy(() => import('../pages/MainPage'))
 const SingleRecipePage = lazy(() => import('../pages/singleRecipePage/SingleRecipePage'))
 const FridgePage = lazy(() => import('../pages/FridgePage'))
 
-const Profile = lazy(() => import('../profile/Profile'))
+const Profile = lazy(() => import('../pages/profile/Profile'))
 
 const Registration = lazy(() => import('../authorization/Registration'))
 const Login = lazy(() => import('../authorization/Login'))

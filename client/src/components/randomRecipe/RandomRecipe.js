@@ -3,13 +3,13 @@ import {
   useEffect,
 } from 'react'
 
+import useRecipeService from '../../services/RecipeService'
+import { Link } from 'react-router-dom'
 import setContent from '../../utils/setContent'
 
 import chef from '../../resources/img/pngegg.png';
 
-import './randomRecipe.scss';
-import useRecipeService from '../../services/RecipeService'
-import { Link } from 'react-router-dom'
+import './randomRecipe.scss'
 
 const RandomRecipe = () => {
   const [recipe, setRecipe] = useState({})
