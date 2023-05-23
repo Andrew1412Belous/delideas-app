@@ -69,7 +69,7 @@ const useRecipeService = () => {
         {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
       )
 
-      alert('Рецепт додано')
+      alert(response.data.message)
 
       return response.data
     } catch (e) {
@@ -87,7 +87,7 @@ const useRecipeService = () => {
           }
         })
 
-      alert('Рецепт видалено')
+      alert(response.data.message)
 
       return response.data.message
     } catch (e) {
@@ -105,7 +105,7 @@ const useRecipeService = () => {
           }
         })
 
-      alert('Рецепт змінено')
+      alert(response.data.message)
 
       return response.data.message
     } catch (e) {

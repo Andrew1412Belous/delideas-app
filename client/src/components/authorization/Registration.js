@@ -20,10 +20,10 @@ const Registration = ({ userLoggedIn }) => {
 
   return (
     <div className='authorization'>
-      <div className="authorization__header">Регистрация</div>
-      <Input value={email} setValue={setEmail} type="text" placeholder="Введите email..."/>
-      <Input value={password} setValue={setPassword} type="password" placeholder="Введите пароль..."/>
-      <button className="authorization__btn" onClick={() => uploadUserInfo(email, password)}>Зарегистрироваться</button>
+      <div className="authorization__header">Реєстрація</div>
+      <Input value={email} setValue={setEmail} type="text" placeholder="Введіть email..."/>
+      <Input value={password} setValue={setPassword} type="password" placeholder="Введіть email..."/>
+      <button className="authorization__btn" onClick={() => uploadUserInfo(email, password)}>Зареєструватися</button>
     </div>
   )
 }

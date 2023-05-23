@@ -72,7 +72,7 @@ const View = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className="char__comics">Інгрідієнти:</div>
+      <div className="char__comics">Інгредієнти:</div>
       <ul className="char__comics-list">
         {ingredientsList}
       </ul>

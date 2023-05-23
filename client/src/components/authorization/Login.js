@@ -20,8 +20,8 @@ const Login = ({ userLoggedIn }) => {
   return (
     <div className='authorization'>
       <div className="authorization__header">Авторизація</div>
-      <Input value={email} setValue={setEmail} type="text" placeholder="Введите email..."/>
-      <Input value={password} setValue={setPassword} type="password" placeholder="Введите пароль..."/>
+      <Input value={email} setValue={setEmail} type="text" placeholder="Введіть email..."/>
+      <Input value={password} setValue={setPassword} type="password" placeholder="Введіть email..."/>
       <button className="authorization__btn" onClick={() => uploadUserInfo(email, password)}>Увійти</button>
     </div>
   )

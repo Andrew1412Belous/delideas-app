@@ -40,7 +40,7 @@ const RecipeSearchForm = ({ isRecipesFound, onIngredientsIntroduced, process, fr
         })}
         validateOnBlur={false}>
         <Form>
-          <label className="char__search-label">Знайти рецепт по продуктам з холодильника</label>
+          <label className="char__search-label">Знайти рецепт по продуктах з вашого дому</label>
           <div className="char__search-wrapper">
             <Field
               id='ingredients'

@@ -61,9 +61,9 @@ const useAuthorizationService = () => {
         }
       })
 
-      alert(`Бажане оновлено`)
+      alert(response.data.message)
 
-      return response.data
+      return response.data.user
     } catch (e) {
       alert(e.response.data.message)
     }

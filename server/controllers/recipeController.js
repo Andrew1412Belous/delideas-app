@@ -176,7 +176,7 @@ class RecipeController {
 
           await newRecipe.save()
 
-          return res.json({
+          return res.send({
             message: 'Рецепт створено'
           })
         } else {
@@ -203,7 +203,7 @@ class RecipeController {
         await Recipe.findByIdAndDelete(id)
 
         return res.send({
-          message: 'Recipe was deleted'
+          message: 'Рецепт видалено'
         })
       }
     } catch (e) {
@@ -278,12 +278,10 @@ class RecipeController {
           recipe.image =  req.body.image
           recipe.category = category.id
 
-          console.log(recipe)
-
           await recipe.save()
 
           return res.send({
-            mes: "WORK"
+            message: "Рецепт змінено"
           })
         } else {
           return res.status(400).send({ message: 'Рецепт з даною назвою вже є' })

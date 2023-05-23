@@ -20,7 +20,7 @@ class UserController {
 
         if (candidate) {
           return res.status(400).json({
-            message: `User with email ${email} already exist`
+            message: `Користувач з поштою ${email} вже існує`
           })
         }
 
@@ -41,7 +41,7 @@ class UserController {
             favorites: user.favorites,
             role: user.role,
           },
-          message: 'User was created'
+          message: 'Користувач створений'
         })
       } catch (e) {
         console.log(e.message)
@@ -129,7 +129,10 @@ class UserController {
 
       await user.save()
 
-      return res.json(user)
+      return res.json({
+        message: 'Бажане оновлено',
+        user
+      })
     } catch (e) {
       console.log(e.message)
       res.send({

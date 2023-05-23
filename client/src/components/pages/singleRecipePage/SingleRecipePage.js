@@ -112,7 +112,7 @@ const SingleRecipePage = ({ isAuth, currentUser, userLoggedIn }) => {
           <div className="char__comics">Категорія:
             <span className="single-comic__descr"> {category}</span>
           </div>
-          <div className="char__comics">Інгрідієнти:</div>
+          <div className="char__comics">Інгредієнти:</div>
           <ul className="char__comics-list">
             {ingredientsList}
           </ul>
