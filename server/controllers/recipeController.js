@@ -121,46 +121,7 @@ class RecipeController {
         const isNew = await Recipe.findOne({ title: req.body.title })
 
         if (isNew === null) {
-          for (let i = 0; i < req.body.ingredients.length; i++) {
-            const ingredient = await Ingredient.findOne({ name: req.body.ingredients[i] })
-
-            if (ingredient === null) {
-              let tags = ''
-
-              if (req.body.ingredients[i].indexOf(' ') !== -1 && req.body.ingredients[i].indexOf('(') === -1) {
-                tags = req.body.ingredients[i].split(' ')
-              } else if (req.body.ingredients[i].indexOf('-') !== -1) {
-                tags = req.body.ingredients[i].split('-')
-              } else if (req.body.ingredients[i].indexOf('(') !== -1) {
-                tags = req.body.ingredients[i].replace(/[()]/g, '').split(' ')
-              } else {
-                tags = req.body.ingredients[i].split()
-              }
-
-              for (let tag of tags) {
-                const isNewTag = await Tag.findOne({ name: tag })
-
-                if (isNewTag === null) {
-                  const newTag = new Tag({
-                    name: tag
-                  })
-
-                  await newTag.save()
-                }
-              }
-
-              const newTags = await Tag.find({ name: {$in: tags} })
-
-              const res = newTags.map(item => item.id)
-
-              const newIngredient = new Ingredient({
-                name: req.body.ingredients[i],
-                tags: res
-              })
-
-              await newIngredient.save()
-            }
-          }
+          await createNewIngredients(req.body.ingredients)
 
           const ingredients = await Ingredient.find({ name: {$in: recipe.ingredients} })
           const category = await Category.findOne({ name: recipe.category })
@@ -223,48 +184,8 @@ class RecipeController {
 
         const isNew = await Recipe.findOne({ title: req.body.title })
 
-        if (isNew === null) {
-          for (let i = 0; i < req.body.ingredients.length; i++) {
-            const ingredient = await Ingredient.findOne({ name: req.body.ingredients[i] })
-
-            if (ingredient === null) {
-              let tags = ''
-
-              if (req.body.ingredients[i].indexOf(' ') !== -1 && req.body.ingredients[i].indexOf('(') === -1) {
-                tags = req.body.ingredients[i].split(' ')
-              } else if (req.body.ingredients[i].indexOf('-') !== -1) {
-                tags = req.body.ingredients[i].split('-')
-              } else if (req.body.ingredients[i].indexOf('(') !== -1) {
-                tags = req.body.ingredients[i].replace(/[()]/g, '').split(' ')
-              } else {
-                tags = req.body.ingredients[i].split()
-              }
-
-
-              for (let tag of tags) {
-                const isNewTag = await Tag.findOne({ name: tag })
-
-                if (isNewTag === null) {
-                  const newTag = new Tag({
-                    name: tag
-                  })
-
-                  await newTag.save()
-                }
-              }
-
-              const newTags = await Tag.find({ name: {$in: tags} })
-
-              const res = newTags.map(item => item.id)
-
-              const newIngredient = new Ingredient({
-                name: req.body.ingredients[i],
-                tags: res
-              })
-
-              await newIngredient.save()
-            }
-          }
+        if (isNew === null || req.body.title === isNew.title && isNew.id === id) {
+          await createNewIngredients(req.body.ingredients)
 
           const ingredients = await Ingredient.find({ name: {$in: req.body.ingredients} })
           const category = await Category.findOne({ name: req.body.category })
@@ -287,10 +208,6 @@ class RecipeController {
           return res.status(400).send({ message: 'Рецепт з даною назвою вже є' })
         }
       }
-
-      return res.send({
-        message: 'Рецепт змінено'
-      })
     } catch (e) {
       console.log(e.message)
       res.send({
@@ -300,5 +217,47 @@ class RecipeController {
   }
 }
 
+const createNewIngredients = async (ingredients) => {
+  for (let i = 0; i < ingredients.length; i++) {
+    const ingredient = await Ingredient.findOne({ name: ingredients[i] })
+
+    if (ingredient === null) {
+      let tags = ''
+
+      if (ingredients[i].indexOf(' ') !== -1 && ingredients[i].indexOf('(') === -1) {
+        tags = ingredients[i].split(' ')
+      } else if (ingredients[i].indexOf('-') !== -1) {
+        tags = ingredients[i].split('-')
+      } else if (ingredients[i].indexOf('(') !== -1) {
+        tags = ingredients[i].replace(/[()]/g, '').split(' ')
+      } else {
+        tags = ingredients[i].split()
+      }
+
+      for (let tag of tags) {
+        const isNewTag = await Tag.findOne({ name: tag })
+
+        if (isNewTag === null) {
+          const newTag = new Tag({
+            name: tag
+          })
+
+          await newTag.save()
+        }
+      }
+
+      const newTags = await Tag.find({ name: {$in: tags} })
+
+      const res = newTags.map(item => item.id)
+
+      const newIngredient = new Ingredient({
+        name: ingredients[i],
+        tags: res
+      })
+
+      await newIngredient.save()
+    }
+  }
+}
 
 module.exports = new RecipeController()

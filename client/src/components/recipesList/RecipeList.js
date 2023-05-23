@@ -109,7 +109,7 @@ const RecipeList = (props) => {
         disabled={newItemLoading}
         onClick={() => onRequest(offset)}
         style={{display: recipesEnded ? 'none' : 'block'}}>
-        <div className="inner">load more</div>
+        <div className="inner">Завантажити ще</div>
       </button>
     </div>
   )

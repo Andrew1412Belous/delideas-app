@@ -32,13 +32,17 @@ const CreateRecipeForm = () => {
       const file = e.target.files[0]
 
       if (!file.type.indexOf('image')) {
-        const reader = new FileReader()
+        if (file.size > 2097152) {
+          alert('Зображення завелике\nМаксимальний розмір 2MB')
+        } else {
+          const reader = new FileReader()
 
-        reader.onload = function (ev) {
-          setInputValue(ev.target.result)
+          reader.onload = function (ev) {
+            setInputValue(ev.target.result)
+          }
+
+          reader.readAsDataURL(file)
         }
-
-        reader.readAsDataURL(file)
       }
     }
   }

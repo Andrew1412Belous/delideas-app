@@ -15,7 +15,8 @@ const corsMiddleware = require('./middleware/cors.middleware')
 
 app.use(fileUpload({}))
 app.use(corsMiddleware)
-app.use(express.json())
+app.use(express.json({ limit: "2MB" }))
+// app.use(express.urlencoded())
 app.use(express.static('static'))
 app.use('/', recipeRouter)
 app.use('/auth', authRouter)
@@ -24,7 +25,10 @@ app.use('/categories', categoryRouter)
 
 const start = async () => {
   try {
-    await mongoose.connect(config.get('dbUrl'))
+    await mongoose.connect(config.get('dbUrl'), {
+      useNewUrlParser:true,
+      useUnifiedTopology:true
+    })
 
     app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`)

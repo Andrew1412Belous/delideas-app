@@ -99,7 +99,7 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
           <div className="profile-logo">
             <h2 className="single-comic__name">{`email: ${currentUser.email}`}</h2>
             <img src={avatar} alt='user avatar' className="single-comic__char-img"/>
-            <input accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>
+            <input className='profile-file' accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>
           </div>
           <div className="char__btns">
             <div className="button button__main single-comic-link"
