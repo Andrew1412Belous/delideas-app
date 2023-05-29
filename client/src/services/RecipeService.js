@@ -66,12 +66,18 @@ const useRecipeService = () => {
   const createRecipe = async (recipe) => {
     try {
       const response = await axios.post(`${_apiBase}/add-recipe`, recipe,
-        {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+        {
+          headers: {
+            Authorization:`Bearer ${localStorage.getItem('token')}`
+          }
+        }
       )
+
+      console.log(response)
 
       alert(response.data.message)
 
-      return response.data
+      return response.data.message
     } catch (e) {
       alert('Помилка')
       console.log(e)

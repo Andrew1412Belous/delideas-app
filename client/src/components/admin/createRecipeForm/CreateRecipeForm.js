@@ -86,6 +86,8 @@ const CreateRecipeForm = () => {
       })
     }
 
+    console.log(recipe)
+
     if (location.state) {
       changeRecipe(recipe, location.state.id)
         .then(() => navigate(-1))
