@@ -73,8 +73,6 @@ const useRecipeService = () => {
         }
       )
 
-      console.log(response)
-
       alert(response.data.message)
 
       return response.data.message

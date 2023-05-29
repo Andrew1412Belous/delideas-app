@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const config = require('config')
 const Uuid = require('uuid')
 
 class FileController {
@@ -11,7 +10,7 @@ class FileController {
       const user = await User.findById(id)
 
       const avatarName = Uuid.v4() + ".jpg"
-      file.mv(config.get('staticPath') + "\\" + avatarName)
+      await file.mv(req.filePath + "\\" + avatarName)
       user.avatar = avatarName
 
       await user.save()

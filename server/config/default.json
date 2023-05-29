@@ -1,10 +1,6 @@
 {
   "serverPort": 5000,
-  "dbUrl": "mongodb+srv://andrii:Athleanx1412@delideas.ks6jbfq.mongodb.net/?retryWrites=true&w=majority",
+  "dbUrl": "mongodb+srv://andrii:myPassword@delideas.ks6jbfq.mongodb.net/?retryWrites=true&w=majority",
   "secretKey": "delideas-secret-key",
-  "staticPath": "C:\\work\\projects\\Fullstack\\Delideas\\server\\static",
-  "admin": {
-    "email": "admin@admin.com",
-    "password": "admin"
-  }
+  "staticPath": "C:\\work\\projects\\Fullstack\\Delideas\\server\\static"
 }
