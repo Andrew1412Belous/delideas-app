@@ -4,7 +4,7 @@ import axios from 'axios'
 const useRecipeService = () => {
   const { request, clearError, process, setProcess } = useHttp()
 
-  const _apiBase = 'http://localhost:5000'
+  const _apiBase = 'https://mern-delideas-app-server.vercel.app'
   const _baseRecipeOffset = 0
 
   const getRandomRecipe = async (id) => {
