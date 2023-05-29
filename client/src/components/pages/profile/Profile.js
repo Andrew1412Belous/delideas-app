@@ -4,41 +4,45 @@ import useAuthorizationService from '../../../services/AuthorizationService'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
-import avatarLogo from '../../../assets/avatar.svg'
+// import avatarLogo from '../../../assets/avatar.svg'
 
 import './profile.scss'
 
 const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
   const [favoriteRecipes, setFavoriteRecipes] = useState([])
 
-  const { getFavorites, uploadAvatar, _apiBase } = useAuthorizationService()
+  const {
+    getFavorites,
+    // uploadAvatar,
+    // _apiBase
+  } = useAuthorizationService()
 
   const navigate = useNavigate()
 
-  const avatar = currentUser.avatar
-    ? `${_apiBase}/${currentUser.avatar}`
-    : avatarLogo
+  // const avatar = currentUser.avatar
+  //   ? `${_apiBase}/${currentUser.avatar}`
+  //   : avatarLogo
 
   useEffect(() => {
     updateFavoriteRecipes()
   }, [])
 
-  const changeHandler = (e) => {
-    const file = e.target.files[0]
-
-    if (!file.type.indexOf('image')) {
-      if (file.size > 2097152) {
-        alert('Зображення завелике\nМаксимальний розмір 2MB')
-      } else {
-        uploadAvatar(file)
-          .then(response => {
-            setCurrentUser(response)
-          })
-      }
-    } else {
-      alert('Невірний тип файлу')
-    }
-  }
+  // const changeHandler = (e) => {
+  //   const file = e.target.files[0]
+  //
+  //   if (!file.type.indexOf('image')) {
+  //     if (file.size > 2097152) {
+  //       alert('Зображення завелике\nМаксимальний розмір 2MB')
+  //     } else {
+  //       uploadAvatar(file)
+  //         .then(response => {
+  //           setCurrentUser(response)
+  //         })
+  //     }
+  //   } else {
+  //     alert('Невірний тип файлу')
+  //   }
+  // }
 
   const updateFavoriteRecipes = () => {
     getFavorites()
@@ -106,8 +110,8 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
         <div className="profile-info">
           <div className="profile-logo">
             <h2 className="single-comic__name">{`email: ${currentUser.email}`}</h2>
-            <img src={avatar} alt='user avatar' className="single-comic__char-img"/>
-            <input className='profile-file' accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>
+            {/*<img src={avatar} alt='user avatar' className="single-comic__char-img"/>*/}
+            {/*<input className='profile-file' accept="image/*" onChange={e => changeHandler(e)} type="file" placeholder="Загрузить аватар"/>*/}
           </div>
           <div className="char__btns">
             <div className="button button__main single-comic-link"
