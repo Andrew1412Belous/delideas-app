@@ -20,7 +20,7 @@ app.use(fileUpload({}))
 app.use(corsMiddleware)
 // app.use(filePathMiddleware(path.resolve(__dirname, '')))
 app.use(express.json({ limit: "2MB" }))
-// app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: false }))
 app.use(express.static('static'))
 app.use('/', recipeRouter)
 app.use('/auth', authRouter)
@@ -29,7 +29,7 @@ app.use('/categories', categoryRouter)
 
 const start = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URL, {
+    await mongoose.connect(process.env.MONGODB_URL || config.get('dbUrl'), {
       useNewUrlParser:true,
       useUnifiedTopology:true
     })

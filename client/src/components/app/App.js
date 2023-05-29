@@ -38,6 +38,8 @@ const App = () => {
   }, [])
 
   const userLoggedIn = (data) => {
+    console.log(data)
+
     setCurrentUser(data)
     setIsAuth(!!Object.keys(data).length)
   }

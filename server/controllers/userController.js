@@ -26,6 +26,7 @@ class UserController {
 
         const hashPassword = await bcrypt.hash(password, 8)
 
+
         const user = new User({
           email,
           password: hashPassword,
@@ -34,7 +35,10 @@ class UserController {
 
         await user.save()
 
+        const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '1h' })
+
         return res.json({
+          token,
           user: {
             email: user.email,
             avatar: user.avatar,
@@ -63,11 +67,13 @@ class UserController {
 
       const isPassValid = bcrypt.compareSync(password, user.password)
 
+      console.log(isPassValid)
+
       if (!isPassValid) {
         return res.status(400).send({ message: 'Invalid password' })
       }
 
-      const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' })
+      const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '1h' })
 
       return res.json({
         token,
@@ -90,7 +96,7 @@ class UserController {
     try {
       const user = await User.findById(req.user.id)
 
-      const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' })
+      const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '1h' })
 
       return res.json({
         token,

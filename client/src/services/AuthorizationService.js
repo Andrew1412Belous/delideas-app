@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const useAuthorizationService = () => {
+  // const _apiBase = 'http://localhost:5000'
   const _apiBase = 'https://mern-delideas-app-server.vercel.app'
 
   const registration = async (email, password) => {
@@ -26,6 +27,8 @@ const useAuthorizationService = () => {
         email,
         password
       })
+
+      console.log(response)
 
       localStorage.setItem('token', response.data.token)
 

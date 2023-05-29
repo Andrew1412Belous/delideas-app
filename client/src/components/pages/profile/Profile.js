@@ -50,7 +50,7 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
   }
 
   const renderRecipes = (items) => {
-    if (items.length) {
+    if (currentUser.favorites.length) {
       const recipes = items.map((item, index) => {
         const recipeName = item.title.length > 30
           ? `${item.title.slice(0, 30)}...`
