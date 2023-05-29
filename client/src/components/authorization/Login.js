@@ -4,6 +4,7 @@ import useAuthorizationService from '../../services/AuthorizationService'
 import { useNavigate } from 'react-router-dom'
 
 import './authorization.scss'
+
 const Login = ({ userLoggedIn }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -21,7 +22,7 @@ const Login = ({ userLoggedIn }) => {
     <div className='authorization'>
       <div className="authorization__header">Авторизація</div>
       <Input value={email} setValue={setEmail} type="text" placeholder="Введіть email..."/>
-      <Input value={password} setValue={setPassword} type="password" placeholder="Введіть email..."/>
+      <Input value={password} setValue={setPassword} type="password" placeholder="Введіть пароль..."/>
       <button className="authorization__btn" onClick={() => uploadUserInfo(email, password)}>Увійти</button>
     </div>
   )

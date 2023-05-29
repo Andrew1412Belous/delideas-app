@@ -22,7 +22,7 @@ const Registration = ({ userLoggedIn }) => {
     <div className='authorization'>
       <div className="authorization__header">Реєстрація</div>
       <Input value={email} setValue={setEmail} type="text" placeholder="Введіть email..."/>
-      <Input value={password} setValue={setPassword} type="password" placeholder="Введіть email..."/>
+      <Input value={password} setValue={setPassword} type="password" placeholder="Введіть пароль..."/>
       <button className="authorization__btn" onClick={() => uploadUserInfo(email, password)}>Зареєструватися</button>
     </div>
   )

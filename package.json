@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm start",
-    "server": "cd server && npm start",
+    "clientBuild": "cd client && npm build",
+    "server": "cd server && npm run dev",
     "start": "concurrently - kill-others \"npm run server\" \"npm run client\"",
+    "build": "concurrently - kill-others \"npm run server\" \"npm run clientBuild\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

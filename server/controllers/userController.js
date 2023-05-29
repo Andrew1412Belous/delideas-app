@@ -29,7 +29,7 @@ class UserController {
         const user = new User({
           email,
           password: hashPassword,
-          role: 'admin'
+          role: 'user'
         })
 
         await user.save()

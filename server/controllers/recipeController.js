@@ -12,11 +12,7 @@ class RecipeController {
 
       const recipes = await Recipe.find()
 
-      const sliceCount = recipes.length >= (limit)
-        ? limit
-        : recipes.length
-
-      return res.json(recipes.slice(offset, sliceCount))
+      return res.json(recipes.slice(offset, limit))
     } catch (e) {
       console.log(e.message)
       res.send({ message: 'Server error' })
@@ -80,7 +76,7 @@ class RecipeController {
     try {
       const products = req.query.ingredients.split(',').join(' ').split(' ')
 
-      const tags = await Tag.find({ name: {$in: products }})
+      const tags = await Tag.find({ name: { $in: products }})
 
       const ingredients = await Ingredient.find({ tags: {$in: tags.map(item => item.id) }})
 

@@ -26,10 +26,18 @@ const Profile = ({ userLoggedIn, currentUser, setCurrentUser }) => {
   const changeHandler = (e) => {
     const file = e.target.files[0]
 
-    uploadAvatar(file)
-      .then(response => {
-        setCurrentUser(response)
-      })
+    if (!file.type.indexOf('image')) {
+      if (file.size > 2097152) {
+        alert('Зображення завелике\nМаксимальний розмір 2MB')
+      } else {
+        uploadAvatar(file)
+          .then(response => {
+            setCurrentUser(response)
+          })
+      }
+    } else {
+      alert('Невірний тип файлу')
+    }
   }
 
   const updateFavoriteRecipes = () => {
